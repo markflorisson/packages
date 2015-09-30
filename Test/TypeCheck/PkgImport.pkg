@@ -1,0 +1,23 @@
+iface IWombat-v2.0 {
+    type TWombat
+    fun f : Int -> TWombat
+}
+
+iface IWombat-v2.1 <: IWombat-v2.0 {
+    type TWombat
+    fun f : Int -> TWombat
+    fun g : TWombat -> Int
+}
+
+pkg Wombat-v4.2 impl IWombat-v2.1 {
+    type TWombat = Int ;
+    fun f : Int -> TWombat = \(x:Int).x ;
+    fun g : TWombat -> Int = \(x:TWombat).x
+}
+
+iface IFoo-v1 {}
+
+pkg Foo-v2 impl IFoo-v1 {
+    import Wombat : IWombat-v2.0 as W ;
+    fun f : Int -> W.TWombat = W.f
+}

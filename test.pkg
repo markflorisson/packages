@@ -1,0 +1,10 @@
+iface IW-v1 {
+    fun f : Int -> Int
+    fun g : Int -> Int
+}
+
+pkg W-v1.0 impl IW-v1 {
+   fun f : Int -> Int = \(x : Int).x + x ;
+   fun g : Int -> Int = \(x : Int).x + x ;
+   fun main : Unit -> Int = \(u : Unit).(g (f 10)) + 2
+}

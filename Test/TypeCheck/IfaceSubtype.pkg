@@ -1,0 +1,12 @@
+iface IWombat-v2.1 {
+    type TWombat
+    fun f : Int -> TWombat
+    fun g : TWombat -> Int
+}
+
+iface IWombat-v2.2 <: IWombat-v2.1 {
+    type TWombat
+    fun f : Int -> TWombat
+    fun g : TWombat -> Int
+    fun h : Unit -> Bool
+}

@@ -1,0 +1,39 @@
+iface IWombat-v2.1 {
+    type TWombat
+    fun f : Int -> TWombat
+    fun g : TWombat -> Int
+}
+
+iface IP-v1(W1 : IWombat-v2.1) {
+    fun f : Int -> W1.TWombat
+}
+
+iface IQ-v1(W2 : IWombat-v2.1) {
+    fun g : W2.TWombat -> Int
+}
+
+iface ID-v1 {}
+
+
+
+pkg Wombat-v4.2 impl IWombat-v2.1 {
+    type TWombat = Int ;
+    fun f : Int -> TWombat = \(x:Int).x ;
+    fun g : TWombat -> Int = \(x:TWombat).x
+}
+
+pkg P-v1(W1 : IWombat-v2.1) impl IP-v1 {
+    fun f : Int -> W1.TWombat = W1.f
+}
+
+pkg Q-v1(W2 : IWombat-v2.1) impl IQ-v1 {
+    fun g : W2.TWombat -> Int = W2.g
+}
+
+pkg D-v1.0 impl ID-v1 {
+    import Wombat : IWombat-v2.1 as W ;
+    import P : IP-v1 as P(W) ;
+    import Q : IQ-v1 as Q(W) ;
+    fun testSharing : Int -> Int = \(x:Int).Q.g (P.f x) ;
+    fun main : Unit -> Int = \(u:Unit).testSharing (40 + 2)
+}

@@ -1,0 +1,9 @@
+iface IWombat-v2.0 {}
+iface IWombat-v2.1 <: IWombat-v2.0 {}
+pkg Wombat-v4.2 impl IWombat-v2.0 {}
+
+iface IFoo-v1 {}
+
+pkg Foo-v2 impl IFoo-v1 {
+    import Wombat : IWombat-v2.1 as W
+}
